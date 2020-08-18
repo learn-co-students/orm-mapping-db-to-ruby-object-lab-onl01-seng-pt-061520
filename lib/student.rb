@@ -10,7 +10,12 @@ class Student
   end
 
   def self.all
-
+    sql = <<-SQL
+      SELECT * FROM students;
+    SQL
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
+    end
   end
 
   def self.find_by_name(name)
@@ -26,20 +31,30 @@ class Student
 
   def self.all_students_in_grade_9
     sql = <<-SQL
-      SELECT name FROM students
+      SELECT * FROM students
       WHERE grade = 9;
     SQL
     DB[:conn].execute(sql)
   end
 
+  def self.first_X_students_in_grade_10(num)
+    sql = <<-SQL
+      SELECT * FROM students
+      WHERE grade = 10
+      LIMIT ?;
+    SQL
+    DB[:conn].execute(sql, num).map do |row|
+      self.new_from_db(row)
+    end
+  end
+
   def self.students_below_12th_grade
     sql = <<-SQL
-      SELECT name FROM students
+      SELECT * FROM students
       WHERE grade <= 11;
     SQL
-    DB[:conn].execute(sql).map do |student|
-      #binding.pry
-      self.new_from_db(student)
+    DB[:conn].execute(sql).map do |row|
+      self.new_from_db(row)
     end
   end
   
@@ -57,7 +72,7 @@ class Student
     CREATE TABLE IF NOT EXISTS students (
       id INTEGER PRIMARY KEY,
       name TEXT,
-      grade TEXT
+      grade INTEGER
     )
     SQL
 
