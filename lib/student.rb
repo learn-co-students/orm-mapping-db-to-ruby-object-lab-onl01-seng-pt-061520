@@ -93,7 +93,7 @@ def self.first_X_students_in_grade_10(num)
     FROM students
     WHERE (grade = 10)
     ORDER BY students.id
-    LIMIT 1
+    LIMIT ?
   SQL
   
   DB[:conn].execute(sql, name).map do |row|
