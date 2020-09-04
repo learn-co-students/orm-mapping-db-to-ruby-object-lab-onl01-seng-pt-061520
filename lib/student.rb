@@ -75,7 +75,7 @@ end
   
   def self.students_below_12th_grade
     sql = <<-SQL
-      SELECT COUNT(grade < 12)
+      SELECT COUNT(grade > 10)
       FROM students
     SQL
     
