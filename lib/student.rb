@@ -116,9 +116,8 @@ def self.first_X_students_in_grade_10(num)
    def self.all_students_in_grade_X(grade)
      sql = <<-SQL
       SELECT *
-      FROM student
+      FROM students
       WHERE (grade = ?)
-      ORDER BY students.id
      SQL
      
      DB[:conn].execute(sql, grade).map do |row|
