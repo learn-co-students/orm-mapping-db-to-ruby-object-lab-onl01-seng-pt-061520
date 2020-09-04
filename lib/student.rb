@@ -114,6 +114,9 @@ def self.first_X_students_in_grade_10(num)
  end
    
    def self.all_students_in_grade_X
-     
+     sql = <<-SQL
+      SELECT *
+      FROM student
+     SQL
    end
 end
